@@ -5,24 +5,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>COMP4537: Lab 5 - SQL</title>
-  <link rel="stylesheet" href="./css/styles.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <form onsubmit="handleBulkSubmit(event)">
-    <input type="text" style="width: 80%;" id="bulkData" name="bulkData" disabled />
-    <input type="submit" value="Submit" />
-    <p id="errorMessageBulk"></p>
-  </form>
 
-  <form onsubmit="handleSQLSubmit(event)">
-    <textarea id="sqlQuery" name="sqlQuery" rows="4" cols="50" required></textarea>
-    <input type="submit" value="Submit" />
-    <p id="errorMessageSQL"></p>
-  </form>
+  <div class="container mt-4">
 
-  <script text="text/javascript" src="./lang/messages/en/user.js"></script>
-  <script type="text/javascript" src="./js/script.js"></script>
+    <!-- Bulk Insert Form -->
+    <div class="mb-4">
+      <label class="form-label"><strong>Insert Default Patients</strong></label>
+      <input type="text" class="form-control" id="bulkData" name="bulkData" disabled />
+      <button class="btn btn-primary btn-custom mt-2" onclick="handleBulkSubmit(event)">Insert Data</button>
+      <p class="text-danger" id="errorMessageBulk"></p>
+    </div>
+
+    <!-- Custom SQL Query Form -->
+    <div class="mb-4">
+      <label class="form-label"><strong>Run Custom SQL Query</strong></label>
+      <textarea class="form-control" id="sqlQuery" name="sqlQuery" rows="4" required></textarea>
+      <button class="btn btn-success btn-custom mt-2" onclick="handleSQLSubmit(event)">Submit Query</button>
+      <p class="text-danger" id="errorMessageSQL"></p>
+      <div class="alert alert-info mt-3 d-none" id="queryResponse"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom Scripts -->
+  <script src="./lang/messages/en/user.js"></script>
+  <script src="./js/script.js"></script>
+
 </body>
 
 </html>
