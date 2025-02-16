@@ -116,8 +116,8 @@ class Server {
       .replace("/COMP4537/labs/5", "")
       .toLowerCase();
     res.setHeader("Access-Control-Allow-Origin", "*");
-
-    console.log("✅ Decoded Path:", path); // Log the final decoded query
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
     if (!path.startsWith(this.api_endpoint)) {
       res.writeHead(404, { "Content-Type": "application/json" });
@@ -135,6 +135,7 @@ class Server {
       const query = path
         .replace(this.api_endpoint + "/", "") // remove endpoint from path
         .replace(/^"|"$/g, ""); // remove quotes
+
       await this.handleGetRequest(res, query);
     } else if (req.method === "POST") {
       await this.handlePostRequest(req, res);
