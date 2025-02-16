@@ -12,7 +12,15 @@ const messages = require("./lang/messages/en/user.json");
 class Database {
   constructor() {
     // Create mysql connection
-    this.db = mysql.createConnection({
+    // this.db = mysql.createConnection({
+    //   host: process.env.DB_HOST,
+    //   user: process.env.DB_USER,
+    //   password: process.env.DB_PASS,
+    //   database: process.env.DB_NAME,
+    //   port: process.env.DB_PORT,
+    // });
+    this.db = mysql.createPool({
+      connectionLimit: 10,
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
