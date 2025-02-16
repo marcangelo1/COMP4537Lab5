@@ -24,20 +24,30 @@ function getEndpointUrl() {
 
 // Handle GET requests
 function handleGetRequest(query) {
+  const encodedQuery = encodeURIComponent(query); // Fix encoding
+  console.log("🔍 Encoded Query Sent to Backend:", encodedQuery); // Debugging log
+
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", endpoint + `"${query}"`, true);
+  xhr.open("GET", `${endpoint}${encodedQuery}`, true);
   xhr.onreadystatechange = () => {
     if (xhr.readyState == 4) {
-      const res = JSON.parse(xhr.responseText);
-      if (xhr.status == 200) {
-        errorMessageSQLElement.innerHTML = JSON.stringify(res.data);
-      } else {
-        errorMessageSQLElement.innerHTML = res.message;
+      console.log("🛠 Response from server:", xhr.responseText); // Debugging log
+      try {
+        const res = JSON.parse(xhr.responseText);
+        if (xhr.status == 200) {
+          errorMessageSQLElement.innerHTML = JSON.stringify(res.data);
+        } else {
+          errorMessageSQLElement.innerHTML = res.message;
+        }
+      } catch (e) {
+        console.error("❌ Invalid JSON response:", xhr.responseText);
+        errorMessageSQLElement.innerHTML = "Invalid response from server.";
       }
     }
   };
   xhr.send();
 }
+
 
 
 // handle POST requests
