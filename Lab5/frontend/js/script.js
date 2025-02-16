@@ -65,7 +65,8 @@ function handleSQLSubmit(e) {
   const sqlQuery = sqlQueryElement.value.toLowerCase().trim();
 
   if (sqlQuery.startsWith("select")) {
-    handleGetRequest(sqlQuery);
+    const encodedQuery = encodeURIComponent(sqlQuery);
+    handleGetRequest(encodedQuery);
   } else if (sqlQuery.startsWith("insert into")) {
     // used ChatGPT to replace the new line characters with a space
     const formattedQuery = sqlQuery.replace(/\n/g, " ");
