@@ -63,11 +63,10 @@ function handleBulkSubmit(e) {
 function handleSQLSubmit(e) {
   e.preventDefault();
   const sqlQuery = sqlQueryElement.value.toLowerCase().trim();
+  console.log("✅ Encoded Query (Sent to Backend):", sqlQuery); // Log encoded query
 
   if (sqlQuery.startsWith("select")) {
-    const encodedQuery = encodeURIComponent(sqlQuery);
-    console.log("✅ Encoded Query (Sent to Backend):", encodedQuery); // Log encoded query
-    handleGetRequest(encodedQuery);
+    handleGetRequest(sqlQuery);
   } else if (sqlQuery.startsWith("insert into")) {
     // used ChatGPT to replace the new line characters with a space
     const formattedQuery = sqlQuery.replace(/\n/g, " ");
