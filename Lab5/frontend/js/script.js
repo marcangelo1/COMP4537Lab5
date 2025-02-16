@@ -15,7 +15,7 @@ window.onload = () => {
 // Get the endpoint URL
 function getEndpointUrl() {
   const baseUrl = window.location.origin;
-  const endpointURL = baseUrl.includes("localhost") ? localEndpoint : productionEndpoint;
+  const endpointURL = baseUrl.includes("localhost") || baseUrl.includes("127.0.0.1") ? localEndpoint : productionEndpoint;
   return endpointURL;
 }
 
@@ -38,17 +38,24 @@ function handleGetRequest(query) {
 
 // handle POST requests
 function handlePostRequest(data) {
+  console.log("📌 Sending SQL Query:", data);
+  console.log("📌 Endpoint URL:", getEndpointUrl());
+
   const xhr = new XMLHttpRequest();
   xhr.open("POST", endpoint, true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
   xhr.onreadystatechange = () => {
     if (xhr.readyState == 4) {
-      const res = JSON.parse(xhr.responseText);
-      errorMessageSQLElement.innerHTML = res.message;
+      console.log("📌 Server Response:", xhr.responseText);
     }
   };
+
+  xhr.onerror = () =>
+    console.error("❌ Network Error: Could not reach server.");
   xhr.send(data);
 }
+
 
 // Handle bulk INSERT
 function handleBulkSubmit(e) {
