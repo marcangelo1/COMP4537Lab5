@@ -116,15 +116,7 @@ class Server {
       .replace("/COMP4537/labs/5", "")
       .toLowerCase();
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-    if (req.method === "OPTIONS") {
-      res.writeHead(200);
-      res.end();
-      return;
-    }
-    
+ 
     if (!path.startsWith(this.api_endpoint)) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(
