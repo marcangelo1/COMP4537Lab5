@@ -111,10 +111,16 @@ class Server {
   async handleRequest(req, res) {
     const reqUrl = url.parse(req.url, true);
     const { pathname } = reqUrl;
+
+    console.log("🔹 Raw Request URL:", req.url); // Log the full request URL
+    console.log("🔹 Encoded Pathname:", pathname); // Log the encoded pathname
+
     const path = decodeURIComponent(pathname)
       .replace("/COMP4537/labs/5", "")
       .toLowerCase();
     res.setHeader("Access-Control-Allow-Origin", "*");
+
+    console.log("✅ Decoded Path:", path); // Log the final decoded query
 
     if (!path.startsWith(this.api_endpoint)) {
       res.writeHead(404, { "Content-Type": "application/json" });
