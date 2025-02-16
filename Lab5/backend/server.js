@@ -112,9 +112,6 @@ class Server {
     const reqUrl = url.parse(req.url, true);
     const { pathname } = reqUrl;
 
-    console.log("🔹 Raw Request URL:", req.url); // Log the full request URL
-    console.log("🔹 Encoded Pathname:", pathname); // Log the encoded pathname
-
     const path = decodeURIComponent(pathname)
       .replace("/COMP4537/labs/5", "")
       .toLowerCase();
@@ -138,8 +135,6 @@ class Server {
       const query = path
         .replace(this.api_endpoint + "/", "") // remove endpoint from path
         .replace(/^"|"$/g, ""); // remove quotes
-      console.log("📌 Final Query Sent to DB:", query); // Log final extracted query
-
       await this.handleGetRequest(res, query);
     } else if (req.method === "POST") {
       await this.handlePostRequest(req, res);
