@@ -138,6 +138,8 @@ class Server {
       const query = path
         .replace(this.api_endpoint + "/", "") // remove endpoint from path
         .replace(/^"|"$/g, ""); // remove quotes
+      console.log("📌 Final Query Sent to DB:", query); // Log final extracted query
+
       await this.handleGetRequest(res, query);
     } else if (req.method === "POST") {
       await this.handlePostRequest(req, res);
