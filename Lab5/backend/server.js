@@ -27,7 +27,8 @@ class Database {
       database: process.env.DB_NAME,
       port: process.env.DB_PORT,
     });
-    this.connect();
+    // this.connect();
+    this.createTable();
   }
 
   connect() {
