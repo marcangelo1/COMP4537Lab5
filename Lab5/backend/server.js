@@ -64,7 +64,7 @@ class Database {
   insertQuery(query) {
     return new Promise((resolve, reject) => {
       // Create table if not exists
-      // this.createTable();
+      this.createTable();
 
       this.db.query(query, (err, res) => {
         if (err) {
@@ -80,7 +80,7 @@ class Database {
   selectQuery(query) {
     return new Promise((resolve, reject) => {
       // Create table if not exists
-      // this.createTable();
+      this.createTable();
 
       this.db.query(query, (err, res) => {
         if (err) {
