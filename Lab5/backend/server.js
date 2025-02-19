@@ -149,27 +149,52 @@ class Server {
   }
 
   // Handles SELECT queries to the database
-  async handleGetRequest(res, query) {
+  // async handleGetRequest(res, query) {
+  //   try {
+  //     const dbResponse = await this.db.selectQuery(query);
+  //     res.writeHead(200, { "Content-Type": "application/json" });
+  //     res.end(
+  //       JSON.stringify({
+  //         status: 200,
+  //         message: messages.dbSelectQuerySuccessMsg,
+  //         data: dbResponse || [],
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     res.writeHead(500, { "Content-Type": "application/json" });
+  //     res.end(
+  //       JSON.stringify({
+  //         status: 500,
+  //         message: messages.dbSelectQueryErrorMsg,
+  //         error: error,
+  //       })
+  //     );
+  //   }
+  // }
+
+ async handleGetRequest(res, query) {
     try {
       const dbResponse = await this.db.selectQuery(query);
+  
+      if (!dbResponse) {
+        throw new Error("Database query failed");
+      }
+  
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(
-        JSON.stringify({
-          status: 200,
-          message: messages.dbSelectQuerySuccessMsg,
-          data: dbResponse || [],
-        })
-      );
+      res.end(JSON.stringify({
+        status: 200,
+        message: messages.dbSelectQuerySuccessMsg,
+        data: dbResponse.length > 0 ? dbResponse : [], // Only return [] if query ran successfully
+      }));
     } catch (error) {
       console.error("Error fetching data:", error);
       res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(
-        JSON.stringify({
-          status: 500,
-          message: messages.dbSelectQueryErrorMsg,
-          error: error,
-        })
-      );
+      res.end(JSON.stringify({
+        status: 500,
+        message: messages.dbSelectQueryErrorMsg,
+        error: error.message,
+      }));
     }
   }
 
