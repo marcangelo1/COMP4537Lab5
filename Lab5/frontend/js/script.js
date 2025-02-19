@@ -32,7 +32,14 @@ function handleGetRequest(query) {
     if (xhr.readyState == 4) {
       const res = JSON.parse(xhr.responseText);
       if (xhr.status == 200) {
-        errorMessageSQLElement.innerHTML = JSON.stringify(res.data);
+         const formattedData = res.data.map(patient => ({
+          ...patient,
+          dateOfBirth: patient.dateOfBirth.split("T")[0]  // ✅ Remove time from date
+        }));
+        
+        errorMessageSQLElement.innerHTML = JSON.stringify(formattedData, null, 2);
+        
+        // errorMessageSQLElement.innerHTML = JSON.stringify(res.data);
       } else {
         errorMessageSQLElement.innerHTML = res.message;
       }
